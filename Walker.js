@@ -185,8 +185,44 @@ Walker = {
 
                     config.success(xhr.responseText,xhr);
                 }
-
             }
         }
+    },
+    /**
+     * 自定义函数获取元素到页面的距离
+     * element:这个元素为要计算到页面的距离
+     * 函数名：offset
+     */
+    offset: function(element){
+        //搞一个对象出来存储，元素到页面的左右距离
+        var pos = {left:0,top:0};
+
+        //先加上到元素到父元素的距离
+        pos.left+=element.offsetLeft;
+        pos.top+=element.offsetTop;
+
+        //获取元素有定位的父级的元素
+        var parents = element.offsetParent;
+
+        //循环依次找到有定位的父元素并且加上相对父元素的位置
+        while(parents && !/html|body/i.test(parents.tagName)){
+
+            pos.left+=parents.offsetLeft;
+            pos.top+=parents.offsetTop;
+
+            //在找到上一个父元素
+            parents = parents.offsetParent;
+        }
+
+        //返回记录位置的对象
+        return pos;
+    },
+
+    /**
+     * 获取滚动条到页面的距离
+     * 兼容IE
+     */
+    getScrollTop : function(){
+        return document.documentElement.scrollTop || document.body.scrollTop;
     }
 }
