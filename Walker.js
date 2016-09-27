@@ -291,5 +291,11 @@ Walker = {
 
         }
 
+    },
+    /**
+     * 获取兼容的URL对象
+     */
+    getURL : function () {
+        return window.URL || webkitURL;
     }
 }
